@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +11,28 @@
   <script src="javascript/script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>MobilLax</h1>
-    <div class="auth-buttons">
-      <a href="/templates/member/login.html">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/login-rounded-right.png" alt="Login">로그인
-      </a>
-      <a href="/templates/member/register.html">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/add-user-male.png" alt="SignUp">회원가입
-      </a>
-    </div>
-  </header>
+<header>
+  <h1>MobilLax</h1>
+  <!-- 로그인 안 했을 때 -->
+  <div class="auth-buttons" th:if="${remoteUser == null}">
+    <a href="/login">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/login-rounded-right.png" alt="Login">로그인
+    </a>
+    <a href="/register">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/add-user-male.png" alt="SignUp">회원가입
+    </a>
+  </div>
+
+  <!-- 로그인 했을 때 -->
+  <div class="auth-buttons" th:if="${remoteUser != null}">
+    <a href="/mypage">
+      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user.png" alt="MyPage">마이페이지
+    </a>
+    <a href="/logout">
+      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded.png" alt="Logout">로그아웃
+    </a>
+  </div>
+</header>
 
   <main>
     <section class="search-card">
