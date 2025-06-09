@@ -125,14 +125,21 @@ async function handleAddToCart() {
   }
 
   // 요금이 있는 경로만 필터링하여 변환
-  const selectedLegs = selectedElements
-    .map(el => el.legData)
-    .filter(leg => leg.routePayment > 0 && leg.start?.name && leg.end?.name)
+  const selectedLegs = [...document.querySelectorAll(".route-step.selected")]
+    .map(el => {
+      try {
+        return JSON.parse(el.dataset.leg); // ← dataset.leg을 JSON으로 파싱
+      } catch (e) {
+        console.warn("❌ JSON 파싱 실패:", el, e);
+        return null;
+      }
+    })
+    .filter(leg => leg && leg.routePayment > 0 && leg.start?.name && leg.end?.name)
     .map(leg => ({
       mode: leg.mode,
       route: leg.route,
       routeId: leg.routeId,
-      routePayment: leg.routePayment, // 요금(routePayment)
+      routePayment: leg.routePayment,
       startName: leg.start.name,
       endName: leg.end.name
     }));
